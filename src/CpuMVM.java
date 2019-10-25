@@ -19,7 +19,7 @@ public class CpuMVM implements ISet, IMVMVersion {
 
     public int botao = 0;
     public int desligar = 0;
-    public int     _enderecoDeCarga;
+    public int _enderecoDeCarga;
     public boolean _traceBuscaDecodifica = false;
     public boolean _traceExecuta = false;
     public boolean _dumpPilha = false;
@@ -56,7 +56,7 @@ public class CpuMVM implements ISet, IMVMVersion {
         //identificadores de dispositivo a ser utilizado
         boolean videoSelecionado = false;
         boolean videoSemCoordenadaSelecionado = false;
-        int coorX = 0,coorY = 0; //coordenadas de video antigas
+        int coorX = 0, coorY = 0; //coordenadas de video antigas
         boolean hdSelecionado = false;
         //------------------------------------------------
 
@@ -70,11 +70,11 @@ public class CpuMVM implements ISet, IMVMVersion {
         System.out.println(IMVMVersion._MVMVersionStr);
         Date dataAtual = new Date();
         DateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
-        String dataStr = formato.format(dataAtual );
+        String dataStr = formato.format(dataAtual);
         Calendar data = Calendar.getInstance();
         long inicioPrograma = data.getTimeInMillis();
-        
-         _trace.append(IMVMVersion._MVMVersionStr + " "+ dataStr  +"\n");
+
+        _trace.append(IMVMVersion._MVMVersionStr + " " + dataStr + "\n");
 
         while (repetir) {
 
@@ -114,9 +114,9 @@ public class CpuMVM implements ISet, IMVMVersion {
                     _trace.append(Dump.dumpPilha(_mem.m, sp, bp, sp + 10, 20) + "\n");
                 }
             } else {
-                if (botao == 1 && !_interrupcoesHabilitadas) {                    
-                _trace.append("=========> INTERRUPÇÃO DE HARDWARE nao atendida pq Interruções destao DESABILITADAS! \n");
-                botao = 0;                    
+                if (botao == 1 && !_interrupcoesHabilitadas) {
+                    _trace.append("=========> INTERRUPÇÃO DE HARDWARE nao atendida pq Interruções destao DESABILITADAS! \n");
+                    botao = 0;
                 }
             }
 
@@ -137,7 +137,7 @@ public class CpuMVM implements ISet, IMVMVersion {
                     }
                 } catch (Exception e) {
                     ri = ISet._halt; //para o loop
-                } 
+                }
                 //catch (NumberFormatException e) {
                 //    ri = ISet._halt; //para o loop
                 // }
@@ -294,15 +294,16 @@ public class CpuMVM implements ISet, IMVMVersion {
                     } else if (ax == 1026) {
                         hdSelecionado = true;
                         break;
-                    } else if (ax ==1027) {
+                    } else if (ax == 1027) {
                         videoSemCoordenadaSelecionado = true;
                     }
 
                     if (videoSelecionado) {
                         //System.out.println("Escreva o caractere ["+ax+"] na linha ["+bx+"] coluna["+cx+"]");
-                        char caractere = (char)ax;
-                        if (caractere < 32 || caractere > 126) 
+                        char caractere = (char) ax;
+                        if (caractere < 32 || caractere > 126) {
                             caractere = '.';
+                        }
                         _mem.m[500 + (bx * 40) + cx] = (short) caractere; //armazena o caractere na memoria mapeada
                         //System.out.println(Dump.dumpMemoria(_mem.m, 500, 200));
                         String t = new String(v._writeVideo(ax, bx, cx));
@@ -312,7 +313,7 @@ public class CpuMVM implements ISet, IMVMVersion {
                         videoSelecionado = false;
 
                     } else if (videoSemCoordenadaSelecionado) {
-                        System.out.println("Escreva o caractere ["+ax+"] na linha ["+coorX+"] coluna["+coorY+"]");
+                        System.out.println("Escreva o caractere [" + ax + "] na linha [" + coorX + "] coluna[" + coorY + "]");
                         _mem.m[500 + (coorX * 40) + coorY] = (short) ax; //armazena o caractere na memoria mapeada
                         //System.out.println(Dump.dumpMemoria(_mem.m, 500, 200));
                         String t = new String(v._writeVideo(ax, coorX, coorY));
@@ -328,7 +329,7 @@ public class CpuMVM implements ISet, IMVMVersion {
                         _monitor.setText("");
                         _monitor.append(t);
                         videoSelecionado = false;
-                    
+
                     } else if (hdSelecionado) {
                         System.out.println("vai escrever alguma coisa no hd");
 
@@ -495,7 +496,7 @@ public class CpuMVM implements ISet, IMVMVersion {
                     break;
                 case 54://"wait"
                     int tmp;
-                    tmp = JOptionPane.showConfirmDialog(null,"Instruçao wait","",JOptionPane.DEFAULT_OPTION);
+                    tmp = JOptionPane.showConfirmDialog(null, "Instruçao wait", "", JOptionPane.DEFAULT_OPTION);
                     break;
                 case 55://"not ax"
                     ax = ~ax;
@@ -505,7 +506,9 @@ public class CpuMVM implements ISet, IMVMVersion {
                     break;
                 case 57://"inc dx"
                     dx = (byte) (dx + 1);
-                    if (dx > 57) dx = 48; //faz round
+                    if (dx > 57) {
+                        dx = 48; //faz round
+                    }
                     break;
                 case 58://"move ax,dx"
                     ax = dx;
@@ -513,12 +516,41 @@ public class CpuMVM implements ISet, IMVMVersion {
                 case 59://"move dx,ax"
                     int tmpAx = ax;
                     if ((tmpAx < 48) || (tmpAx > 57)) {
-                        tmpAx = 48; } //faz round
+                        tmpAx = 48;
+                    } //faz round
                     dx = (byte) (tmpAx);
                     break;
-                case 60:
+                case 60://"move[], {}"
+                    _mem.m[_mem.m[ip + 1]] = (byte) _mem.m[ip + 2];
+                    ip++;
+                    ip++;
                     break;
-                    
+                case 61://"brk"
+                    //"push ip"
+                    _mem.m[sp] = (short) (ip + 2);
+                    sp--;
+                    //"push bp"
+                    _mem.m[sp] = (short) bp;
+                    sp--;
+                    //"push ax"
+                    _mem.m[sp] = (short) ax;
+                    sp--;
+                    //"push bx"
+                    _mem.m[sp] = (short) bx;
+                    sp--;
+                    //"push cx"
+                    _mem.m[sp] = (short) cx;
+                    sp--;
+                    // vai para o inicio do tratador a partir do numero da INT
+                    ip = _mem.m[enderecoDeCarga + _mem.m[2]];
+
+                    if (_dumpPilha) {
+                        _trace.append("--->>> BRK <<<---" + "\n");
+                        _trace.append(Dump.dumpPilha(_mem.m, sp, bp, sp + 10, 15) + "\n");
+                    }
+                    ip--;
+                    break;
+
                 default: {
                     repetir = false;
                     System.out.println("Saiu");
@@ -559,6 +591,6 @@ public class CpuMVM implements ISet, IMVMVersion {
         }//while
 
         System.out.println("Shutdown");
-        
+
     }
 }

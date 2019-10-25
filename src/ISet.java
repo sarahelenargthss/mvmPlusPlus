@@ -132,8 +132,10 @@ public interface ISet {
     public static final String[]   strMoveDxAx         = {"move dx,ax", "","1"};
     public static final int        _moveEnd_Valor      = 60;
     public static final String[]   strMoveEndValor     = {"move [", "], {", "}","3"};
+    public static final int        _brk                = 61;
+    public static final String[]   strBrk              = {"brk","","1"};
     
-    public static final int totalDeInstrucoes = 60;
+    public static final int totalDeInstrucoes = 61;
 
     public String[][] instructionSetStr = {
         strInitAx,
@@ -144,7 +146,7 @@ public interface ISet {
         strJmp, strCall, strRet, strInAx, strOutAx, strPushAx, strPushBx, strPushCx, strPushBp,
         strPopBp, strPopCx, strPopBx, strPopAx, strNop, strHalt, strDecSp, strMoveEndBpM_Ax,
         strMoveEndBpP_Ax, strMoveAx_Valor, strTestAxEqBx, strIncSp, strMoveAx_Sp, strMoveSp_Ax,
-        strMoveAx_Bp, strMoveBp_Ax, strIret, strInt,strSubBx_Ax ,strWait,strNotAx,strInitDx,strIncDx, strMoveEndValor};
+        strMoveAx_Bp, strMoveBp_Ax, strIret, strInt,strSubBx_Ax ,strWait,strNotAx,strInitDx,strIncDx, strMoveEndValor, strBrk};
 
     public int[] instructionSet = {
         _initAx,_moveAx_Bx,_moveAx_Cx,_moveBx_Ax, _moveCx_Ax ,_moveAx_End,_moveAx_EndBxP,
@@ -153,7 +155,7 @@ public interface ISet {
         _incBx,_incCx,_decAx,_decBx,_decCx,_testAx0,_jmp,_call,_ret,
         _inAx,_outAx,_pushAx,_pushBx,_pushCx,_pushBp,_popBp,_popCx,_popBx,_popAx,_nop,
         _halt,_decSp,_moveEndBpM_Ax,_moveEndBpP_Ax,_moveAx_Valor,_testAxEqBx,_incSp,
-        _moveAx_Sp,_moveSp_Ax,_moveAx_Bp,_moveBp_Ax,_iret,_int,_subBx_Ax ,_wait,_notAx,_initDx,_incDx, _moveEnd_Valor
+        _moveAx_Sp,_moveSp_Ax,_moveAx_Bp,_moveBp_Ax,_iret,_int,_subBx_Ax ,_wait,_notAx,_initDx,_incDx, _moveEnd_Valor, _brk
 };
 
 

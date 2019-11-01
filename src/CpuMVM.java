@@ -46,7 +46,7 @@ public class CpuMVM implements ISet, IMVMVersion {
 
     public void decodificador(MemoriaMVM _mem, int enderecoDeCarga, int maxLoopInstrucoes) {
         //registradores -----------------------------------
-        int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ip, ri;
+        int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ip, ri, rTSL = 0;
         byte dx = 0;
         //-------------------------------------------------
         boolean repetir = true;
@@ -527,7 +527,7 @@ public class CpuMVM implements ISet, IMVMVersion {
                     break;
                 case 61://"brk"
                     //"push ip"
-                    _mem.m[sp] = (short) (ip + 2);
+                    _mem.m[sp] = (short) (ip + 1);
                     sp--;
                     //"push bp"
                     _mem.m[sp] = (short) bp;
@@ -550,7 +550,18 @@ public class CpuMVM implements ISet, IMVMVersion {
                     }
                     ip--;
                     break;
-
+                case 62://"tsl[]" 
+                    rTSL = _mem.m[ip+1];
+                    _mem.m[_mem.m[ip+1]] = 1;
+                    break;
+                case 63:
+                    if (rTSL == 0){
+                        ip = _mem.m[ip+1];
+                    }
+                    break;
+                case 64:
+                    _mem.m[_mem.m[ip+1]] = _mem.m[ip+2];
+                    break;
                 default: {
                     repetir = false;
                     System.out.println("Saiu");

@@ -278,6 +278,28 @@ public class BiosMVM implements ISet {
 
                 _mem.m[131 + enderecoDeCarga] = ISet._halt;
                 break;
+                
+            case 69:
+                _mem.m[nIndex++] = ISet._moveAx_End;
+                _mem.m[nIndex++] = 9;
+                _mem.m[nIndex++] = ISet._incAx;
+                _mem.m[nIndex++] = ISet._moveEnd_Ax;
+                _mem.m[nIndex++] = 9;
+                _mem.m[nIndex++] = ISet._outAx;
+                _mem.m[nIndex++] = ISet._jmp;
+                _mem.m[nIndex++] = 70;
+                _mem.m[nIndex++] = ISet._moveAx_End;
+                _mem.m[nIndex++] = 9;
+                _mem.m[nIndex++] = ISet._incAx;
+                _mem.m[nIndex++] = ISet._moveEnd_Ax;
+                _mem.m[nIndex++] = 9;
+                _mem.m[nIndex++] = ISet._outAx;
+                _mem.m[nIndex++] = ISet._jmp;
+                _mem.m[nIndex++] = 78;
+                _mem.m[nIndex++] = ISet._jmp;
+                _mem.m[nIndex++] = 86;
+                
+                break;
             
             default:
                 programa = 0;

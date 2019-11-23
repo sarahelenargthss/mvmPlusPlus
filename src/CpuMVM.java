@@ -451,6 +451,9 @@ public class CpuMVM implements ISet, IMVMVersion {
                     //"pop cx"
                     sp++;
                     cx = _mem.m[sp];
+                    //"pop rTSL"
+                    sp++;
+                    rTSL = _mem.m[sp];
                     //"pop bx"
                     sp++;
                     bx = _mem.m[sp];
@@ -481,6 +484,9 @@ public class CpuMVM implements ISet, IMVMVersion {
                     sp--;
                     //"push cx"
                     _mem.m[sp] = (short) cx;
+                    sp--;
+                    //"push rTSL"
+                    _mem.m[sp] = (short) rTSL;
                     sp--;
                     // vai para o inicio do tratador a partir do numero da INT
                     ip = _mem.m[enderecoDeCarga + _mem.m[ip + 1]];
@@ -554,12 +560,12 @@ public class CpuMVM implements ISet, IMVMVersion {
                     rTSL = _mem.m[ip+1];
                     _mem.m[_mem.m[ip+1]] = 1;
                     break;
-                case 63:
+                case 63://"testTsl0, []
                     if (rTSL == 0){
                         ip = _mem.m[ip+1];
                     }
                     break;
-                case 64:
+                case 64://"setTslEndValor"
                     _mem.m[_mem.m[ip+1]] = _mem.m[ip+2];
                     break;
                 default: {

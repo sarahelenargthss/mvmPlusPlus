@@ -46,7 +46,7 @@ public class CpuMVM implements ISet, IMVMVersion {
 
     public void decodificador(MemoriaMVM _mem, int enderecoDeCarga, int maxLoopInstrucoes) {
         //registradores -----------------------------------
-        int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ip, ri, rTSL = 0;
+        int ax = 0, bx = 0, cx = 0, bp = 0, sp = 0, ip, ri, rTSL = 0, rTSLp = 0;
         byte dx = 0;
         //-------------------------------------------------
         boolean repetir = true;
@@ -557,8 +557,8 @@ public class CpuMVM implements ISet, IMVMVersion {
                     ip--;
                     break;
                 case 62://"tsl[]" 
-                    rTSL = _mem.m[ip+1];
-                    _mem.m[_mem.m[ip+1]] = 1;
+                    rTSLp = _mem.m[ip+1];
+                    rTSL = 1;
                     break;
                 case 63://"testTsl0, []
                     if (rTSL == 0){
@@ -566,7 +566,8 @@ public class CpuMVM implements ISet, IMVMVersion {
                     }
                     break;
                 case 64://"setTslEndValor"
-                    _mem.m[_mem.m[ip+1]] = _mem.m[ip+2];
+                    rTSLp = _mem.m[ip+1];
+                    rTSL =  _mem.m[ip+2];
                     break;
 
                 case 65:// "move ax,tsl"

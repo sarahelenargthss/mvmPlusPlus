@@ -140,12 +140,8 @@ public interface ISet {
     public static final String[]   strTestTsl0End      = {"testTsl0[","]","2"};
     public static final int        _setTslEndValor     = 64;
     public static final String[]   strSetTslEndValor   = {"setTsl[","], {","}", "3"};
-    public static final int        _moveAx_Tsl         = 65;
-    public static final String[]   strMoveAx_Tsl       = {"move ax,tsl", "","1"};
-    public static final int        _moveTsl_Ax         = 66;
-    public static final String[]   strMoveTsl_Ax       = {"move tsl,ax", "","1"};
     
-    public static final int totalDeInstrucoes = 67;
+    public static final int totalDeInstrucoes = 65;
 
     public String[][] instructionSetStr = {
         strInitAx,
@@ -157,7 +153,7 @@ public interface ISet {
         strPopBp, strPopCx, strPopBx, strPopAx, strNop, strHalt, strDecSp, strMoveEndBpM_Ax,
         strMoveEndBpP_Ax, strMoveAx_Valor, strTestAxEqBx, strIncSp, strMoveAx_Sp, strMoveSp_Ax,
         strMoveAx_Bp, strMoveBp_Ax, strIret, strInt,strSubBx_Ax ,strWait,strNotAx,strInitDx,strIncDx, 
-        strMoveEndValor, strBkp, strTlsEnd, strTestTsl0End, strSetTslEndValor, strMoveAx_Tsl, strMoveTsl_Ax };
+        strMoveEndValor, strBkp, strTlsEnd, strTestTsl0End, strSetTslEndValor };
 
     public int[] instructionSet = {
         _initAx,_moveAx_Bx,_moveAx_Cx,_moveBx_Ax, _moveCx_Ax ,_moveAx_End,_moveAx_EndBxP,
@@ -167,7 +163,7 @@ public interface ISet {
         _inAx,_outAx,_pushAx,_pushBx,_pushCx,_pushBp,_popBp,_popCx,_popBx,_popAx,_nop,
         _halt,_decSp,_moveEndBpM_Ax,_moveEndBpP_Ax,_moveAx_Valor,_testAxEqBx,_incSp,
         _moveAx_Sp,_moveSp_Ax,_moveAx_Bp,_moveBp_Ax,_iret,_int,_subBx_Ax ,_wait,_notAx,
-        _initDx,_incDx, _moveEnd_Valor, _bkp, _tlsEnd, _testTsl0End, _setTslEndValor, _moveAx_Tsl, _moveTsl_Ax };
+        _initDx,_incDx, _moveEnd_Valor, _bkp, _tlsEnd, _testTsl0End, _setTslEndValor };
 
 
     

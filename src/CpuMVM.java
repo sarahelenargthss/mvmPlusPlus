@@ -569,13 +569,6 @@ public class CpuMVM implements ISet, IMVMVersion {
                     rTSLp = _mem.m[ip+1];
                     rTSL =  _mem.m[ip+2];
                     break;
-
-                case 65:// "move ax,tsl"
-                    ax = rTSL;
-                    break;
-                case 66:// "move tsl,ax"
-                    rTSL = ax;
-                    break;
                 default: {
                     repetir = false;
                     System.out.println("Saiu");

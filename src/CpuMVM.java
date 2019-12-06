@@ -531,7 +531,7 @@ public class CpuMVM implements ISet, IMVMVersion {
                     ip++;
                     ip++;
                     break;
-                case 61://"brk"
+                case 61://"bkp"
                     //"push ip"
                     _mem.m[sp] = (short) (ip + 1);
                     sp--;
@@ -567,6 +567,13 @@ public class CpuMVM implements ISet, IMVMVersion {
                     break;
                 case 64://"setTslEndValor"
                     _mem.m[_mem.m[ip+1]] = _mem.m[ip+2];
+                    break;
+
+                case 65:// "move ax,tsl"
+                    ax = rTSL;
+                    break;
+                case 66:// "move tsl,ax"
+                    rTSL = ax;
                     break;
                 default: {
                     repetir = false;
